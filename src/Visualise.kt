@@ -30,10 +30,10 @@ val IMPLS = listOf(
     "ProcessTokenMutex"
 )
 
-val BG_COLOR = Color.WHITE
-val FG_COLOR = Color.BLACK
-val HOVER_COLOR = Color.GRAY
-val LOCK_COLOR = Color.RED
+val BG_COLOR: Color = Color.WHITE
+val FG_COLOR: Color = Color.BLACK
+val HOVER_COLOR: Color = Color.GRAY
+val LOCK_COLOR: Color = Color.RED
 
 class VScrollPane(model: Model) :
     JScrollPane(VComponent(model), VERTICAL_SCROLLBAR_ALWAYS, HORIZONTAL_SCROLLBAR_NEVER),
@@ -127,6 +127,7 @@ class VComponentUI(
                     is LockRequest -> paintLockRequest(g, a)
                     is Unlock -> paintLock(g, a)
                     is Send, is Rcvd -> paintSendRcvd(g, a)
+                    is Lock -> {}
                 }
             }
         }
@@ -138,14 +139,14 @@ class VComponentUI(
         }
     }
 
-    fun paintLockRequest(g: Graphics2D, a: LockRequest) {
+    private fun paintLockRequest(g: Graphics2D, a: LockRequest) {
         val x = xProcess(a.processId)
         val y = yTime(a.time)
         g.color = FG_COLOR
         g.drawLine(x - R, y, x + R, y)
     }
 
-    fun paintLock(g: Graphics2D, a: Unlock) {
+    private fun paintLock(g: Graphics2D, a: Unlock) {
         g.color = LOCK_COLOR
         val x = xProcess(a.processId)
         val y1 = yTime(a.from.time)
@@ -153,7 +154,7 @@ class VComponentUI(
         g.fillRect(x - X_LOCK, y1, 2 * X_LOCK, y2 - y1)
     }
 
-    fun paintSendRcvd(g: Graphics2D, a: Action) {
+    private fun paintSendRcvd(g: Graphics2D, a: Action) {
         val x = xProcess(a.processId)
         val y = yTime(a.time)
         g.color = if (a is Send) BG_COLOR else FG_COLOR
@@ -183,7 +184,7 @@ class VComponentUI(
     private fun MouseEvent.action(): Action? {
         val i = processByX(x)
         val time = timeByY(y)
-        val action = model.ps[i]?.actions?.minBy { abs(time - it.time) } ?: return null
+        val action = model.ps[i]?.actions?.minByOrNull { abs(time - it.time) } ?: return null
         if (point.distance(Point(xProcess(i), yTime(action.time))) > R) return null
         return action
     }

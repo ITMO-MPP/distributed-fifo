@@ -4,19 +4,19 @@ group = "ru.ifmo.pds"
 version = "1.0-SNAPSHOT"
 
 plugins {
-    kotlin("jvm") version "1.3.70"
+    kotlin("jvm") version "1.6.10"
     application
 }
 
-application.mainClassName = "mutex.VisualiseKt"
+application.mainClass.set("mutex.VisualiseKt")
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
-    implementation("ch.qos.logback:logback-classic:1.2.3")
+    implementation("ch.qos.logback:logback-classic:1.2.10")
     testImplementation(kotlin("test-junit"))
 }
 
@@ -26,6 +26,12 @@ sourceSets {
     }
     test {
         java.setSrcDirs(listOf("test"))
+    }
+}
+
+kotlin {
+    jvmToolchain {
+        (this as JavaToolchainSpec).languageVersion.set(JavaLanguageVersion.of(11))
     }
 }
 

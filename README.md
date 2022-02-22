@@ -82,8 +82,8 @@ git push origin master
 Выполняйте задание в этом репозитории. 
 **Решение должно быть в файле [`solution.txt`](solution.txt)**.
 
-Инструкции по сдаче заданий находятся в 
-[этом документе](https://docs.google.com/document/d/1GQ0OI_OBkj4kyOvhgRXfacbTI9huF4XJDMOct0Lh5og). 
+Инструкции по сдаче заданий находятся в
+[этом документе](https://docs.google.com/document/d/1zrAY3nMBIuJidFzsiK9KU6u0KPZXjX-b5IsesZBTi_g).
 
 ## Дополнительные возможности
 

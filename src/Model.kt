@@ -128,7 +128,7 @@ class Model(
     }
 
     val time: Int
-        get() = ps.values.map { it.actions.lastOrNull()?.time ?: 0 }.max() ?: 0
+        get() = ps.values.maxOfOrNull { it.actions.lastOrNull()?.time ?: 0 } ?: 0
 
     fun nextTime(processId: Int, from: Action? = null): Int {
         val time = (ps[processId]?.actions?.lastOrNull()?.time ?: -T_STEP) + T_STEP
