@@ -1,0 +1,18 @@
+cubes:
+  - name: setup-java
+    script:
+      - sudo apt update
+      - sudo apt install openjdk-21-jdk -y
+  - name: build-with-gradle
+    script:
+      - ./gradlew build
+workflows:
+  build:
+    tasks:
+      - name: main
+        cubes:
+          - uses: setup-java
+          - uses: build-with-gradle
+on:
+  push:
+    - workflows: [build]

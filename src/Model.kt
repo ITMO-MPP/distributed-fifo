@@ -114,7 +114,7 @@ class Model(
                 val line = text.removeFirst()
                 val aStr = a.toString()
                 check(line.endsWith(aStr)) { "Inconsistent action in process $i: $line"}
-                val time = line.substring(0, line.length - aStr.length).trim().toInt()
+                val time = line.take(line.length - aStr.length).trim().toInt()
                 check(time > lastTime) { "Program order violated in process $i: $line" }
                 a.time = time
                 lastTime = time
